@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t agiled/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run agiled/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t agiled/multi-client ./client
+  - docker build -t agiled/multi-server ./server
+  - docker build -t agiled/multi-worker ./worker
+  - docker build -t agiled/multi-nginx ./nginx
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push agiled/multi-client
+  - docker push agiled/multi-server
+  - docker push agiled/multi-worker
+  - docker push agiled/multi-nginx
