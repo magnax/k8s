@@ -4,18 +4,18 @@ services:
   - docker
 
 before_install:
-  - docker build -t agiled/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t agiledpl/react-test -f ./client/Dockerfile.dev ./client
 
-scripts:
-  - docker run agiled/react-test npm test -- --coverage
+script:
+  - docker run agiledpl/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t agiled/multi-client ./client
-  - docker build -t agiled/multi-nginx ./nginx
-  - docker build -t agiled/multi-server ./server
-  - docker build -t agiled/multi-worker ./worker
+  - docker build -t agiledpl/multi-client ./client
+  - docker build -t agiledpl/multi-nginx ./nginx
+  - docker build -t agiledpl/multi-server ./server
+  - docker build -t agiledpl/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push agiled/multi-client
-  - docker push agiled/multi-nginx
-  - docker push agiled/multi-server
-  - docker push agiled/multi-worker
+  - docker push agiledpl/multi-client
+  - docker push agiledpl/multi-nginx
+  - docker push agiledpl/multi-server
+  - docker push agiledpl/multi-worker
