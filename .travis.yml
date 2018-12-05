@@ -10,15 +10,15 @@ script:
   - docker run agiledpl/react-test npm test -- --coverage
 
 after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker build -t agiledpl/multi-client ./client
   - docker build -t agiledpl/multi-nginx ./nginx
   - docker build -t agiledpl/multi-server ./server
   - docker build -t agiledpl/multi-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push agiledpl/multi-client
   - docker push agiledpl/multi-nginx
   - docker push agiledpl/multi-server
   - docker push agiledpl/multi-worker
+  - docker push agiledpl/multi-client
 
 deploy:
   provider: elasticbeanstalk
