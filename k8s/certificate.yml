@@ -1,20 +1,20 @@
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: solidity-pl-tls
+  name: soliditydev-pl-tls
 spec:
-  secretName: solidity-pl
+  secretName: soliditydev-pl
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: solidity.pl
+  commonName: soliditydev.pl
   dnsNames:
-    - solidity.pl
-    - www.solidity.pl
+    - soliditydev.pl
+    - www.soliditydev.pl
   acme:
     config:
       - http01:
           ingressClass: nginx
         domains:
-          - solidity.pl
-          - www.solidity.pl
+          - soliditydev.pl
+          - www.soliditydev.pl
